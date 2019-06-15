@@ -22,5 +22,7 @@ jobs:
         - ssh-add .travis/deploy_rsa
         - ssh -T $HOST_GIT_URL -o "StrictHostKeyChecking no"
         - git remote add gandi git+ssh://$HOST_GIT_URL/default.git
-        - git push gandi HEAD:production
+        - git branch
+        - git checkout production
+        - git push gandi production
         - ssh $HOST_GIT_URL deploy default.git production
