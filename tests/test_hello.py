@@ -1,5 +1,5 @@
-from shedfly.hello import *
+from shedfly.web_app import *
 
-def test_hello():
+def test_home():
 
-    assert hello() == "Hello, World! False"
+    assert "Hello, World!" in home()
