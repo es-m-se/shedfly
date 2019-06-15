@@ -13,7 +13,7 @@ jobs:
       script:
         - pytest
     - stage: deploy
-      if: branch = production
+      if: branch = production AND type != pull_request
       script: skip
       after_success:
         - eval "$(ssh-agent -s)"
@@ -22,5 +22,5 @@ jobs:
         - ssh-add .travis/deploy_rsa
         - ssh -T $HOST_GIT_URL -o "StrictHostKeyChecking no"
         - git remote add gandi git+ssh://$HOST_GIT_URL/default.git
-        - git push gandi HEAD:production        
+        - git push gandi HEAD:production
         - ssh $HOST_GIT_URL deploy default.git production
