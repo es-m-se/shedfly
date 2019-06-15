@@ -22,5 +22,5 @@ jobs:
         - ssh-add .travis/deploy_rsa
         - ssh -T $HOST_GIT_URL -o "StrictHostKeyChecking no"
         - git remote add gandi git+ssh://$HOST_GIT_URL/shedfly.git
-        - git push gandi
+        - git push gandi deploy
         - ssh $HOST_GIT_URL deploy shedfly.git production
