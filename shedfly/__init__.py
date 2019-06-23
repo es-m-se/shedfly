@@ -1,12 +1,13 @@
-import os
-from . import web_app
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_login import LoginManager
 from config import Config
 
-def create_app(test_config=None):
-    """Create and configure an instance of the Flask application."""
-    app = Flask(__name__, static_folder='static_content')
-    app.config.from_object(Config)
-    app.register_blueprint(web_app.bp)
+app = Flask(__name__, static_folder='static_content')
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+login = LoginManager(app)
 
-    return app
+from shedfly import routes, models
