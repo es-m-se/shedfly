@@ -1,6 +1,5 @@
 import pytest
 import os
-import tempfile
 from shedfly import create_app, db
 from flask_migrate import Migrate, upgrade
 from config import TestConfig
