@@ -1,8 +1,13 @@
 import os
 
 class Config():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    SECRET_KEY = os.environ.get("SECRET_KEY", default=None)  or 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
+    SECRET_KEY = os.environ.get("SECRET_KEY", default=None)
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+class TestConfig(Config):
+    TESTING = True
+    SECRET_KEY = '5oweaZt7RMMw51LTYCzvOqfxayAkbB4AOsGTluaOP+s='
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/app.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

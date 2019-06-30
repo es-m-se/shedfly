@@ -1,17 +1,25 @@
 import pytest
-from shedfly import create_app
+import os
+import tempfile
+from shedfly import create_app, db
+from flask_migrate import Migrate, upgrade
+from config import TestConfig
 
-@pytest.fixture
-def app():
-    """Create and configure a new app instance for each test."""
-    app = create_app({
-        'TESTING': True,
-    })
+basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
-    yield app
-
-
-@pytest.fixture
-def client(app):
+@pytest.yield_fixture
+def client():
     """A test client for the app."""
-    return app.test_client()
+    app = create_app(TestConfig)
+    migrate = Migrate(app, db)
+    with app.app_context():
+        upgrade(os.path.join(basedir,'migrations'), 'head')
+
+    with app.test_client() as client:
+        yield client
+
+    """ teardown begins """
+    try:
+        os.remove('/tmp/app.db')
+    except:
+        pass
