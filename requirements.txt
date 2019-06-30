@@ -1,2 +1,7 @@
- 
+
 flask
+flask_sqlalchemy
+flask_login
+flask_migrate
+flask_wtf
+lxml
